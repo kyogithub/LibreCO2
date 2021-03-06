@@ -1,7 +1,7 @@
 # LibreCO2
 LibreCO2: Simple CO2 meter using Arduino UNO, display, buzzer and CO2 sensor (Sensirion SCD30, Winsen MH-Z14 or MHZ-19 and Cubic CM1106).
 
-  This is a very simple version of a low cost CO2 meter with the most common materials on the market: an Arduino UNO or Leonardo, a 4 digits TM1687 display, a common buzzer and the three most popular low cost real CO2 sensor: Sensirion SCD30, Winsen MH-Z14 or 16 and the Cubic CM1106. LibreCO2 uses an Arduino UNO or NANO, that is very popular in schools and frequently used in the "technology class" and the majority of schools have many of them. The code is the simplest possible and the .hex file is published for the programming of the Arduino with Xloader and you don{t have to install Arduino software and compile the code.
+  This is a very simple version of a low cost CO2 meter with the most common materials on the market: an Arduino UNO or Leonardo, a 4 digits TM1687 display, a common buzzer and the three most popular low cost real CO2 sensor: Sensirion SCD30, Winsen MH-Z14 or 16 and the Cubic CM1106. LibreCO2 uses an Arduino UNO but can be extend to NANO or MEGA, that are very popular in schools and frequently used in the "technology class" and the majority of schools have many of them. The code is the simplest possible and the .hex file is published for the programming of the Arduino with Xloader and you don{t have to install Arduino software and compile the code. If your are looking for Wifi or Bluetooth connectivity you can find many of them here in github. The CO2 meter uses the most populars components on the market, not the most advance, and the simplest building without the need of iron solder.
 
 All sensors used are NDIR that is the actual standard for real CO2 measurements:
 https://en.wikipedia.org/wiki/Carbon_dioxide_sensor
@@ -9,25 +9,21 @@ https://www.co2meter.com/blogs/news/6010192-how-does-an-ndir-co2-sensor-work
 
 Materials:
 
-1. Arduino UNO original or chinese version, the difference is the driver installation, both are very easy to find in any country and work well.
+1. Arduino UNO original or chinese version, the difference is the driver installation, both are very easy to find in any country and work well. Original at right and clone at left:
 
 ![Arduino original & clone](https://github.com/danielbernalb/LibreCO2/blob/main/images/arduino-uno-original-clone.jpg)
-       
-   Original at right and clone at left
 
 2. 4 digits display TM1687.
 
-![4 digits display TM1687](https://github.com/danielbernalb/LibreCO2/blob/main/images/Display-TM1687.jpg)
-
 3. Jumper female - male.
 
-![Jumper FM](https://github.com/danielbernalb/LibreCO2/blob/main/images/Jumper.jpg)
+4. One or two Push-buttons or cables (one for calibration, one for choose the beep level).
 
-4. Optional: buzzer.
+5. Optional: buzzer.
 
-![Big and small buzzer](https://github.com/danielbernalb/LibreCO2/blob/main/images/big-small-buzzer.jpg)
+![Materials](https://github.com/danielbernalb/LibreCO2/blob/main/images/Materials%20all%20text_eng.jpg)
 
-5. Sensor, options:
+6. Sensor, options:
 
 	a. Sensirion SCD30, the most expensive (52 dollars) but in our test the best performance. Sensirion has distributors in the USA and Europe. Example:
 	https://www.mouser.com/ProductDetail/Sensirion/SCD30/?qs=rrS6PyfT74fdywu4FxpYjQ%3D%3D
@@ -36,8 +32,10 @@ Materials:
 	
 	Pros: excellent performance (fast, reliable), fast shipping from USA or Europe.
 	
-	Cons: price (52 dollars) requieres a level driver (BSS138 type) for secure connection with the Arduino. 
-
+	Cons: price (52 dollars). 
+	
+	For the connection between the Arduino and the sensor it uses the Modbus protocol that allow the direct conecction between the Arduino and the sensor withput the use of data driver. You must connect the SEL pin with the VIN pin of the sensor for activate the Modbus protocol.
+	
 	b. Winsen MH-Z14 or 19, one of the cheapest and most popular, good performance, some slow. Take care with fake clones!!!
 
 	![Winsen MH-Z14a](https://github.com/danielbernalb/LibreCO2/blob/main/images/MH-Z14A.jpg)
@@ -84,11 +82,18 @@ GND    ---> GND
 other  ---> GND
 
 
-**Button**
+**Button Calibration**
 
 Anyone ---> 2
 
 Anyone ---> 4
+
+
+**Optional Button Beep Level**
+
+Anyone ---> A5
+
+Anyone ---> A3
 
 
 
@@ -165,23 +170,21 @@ T Pin 3 of connector 5 pins ---> 7
 
 2.1. The easy way if you don't want to install Arduino, load and compile the code, only you need to programming, use Xloader:
 
-How to use Xloader to load a new version of grbl into the Arduino/X-controller.
-
-![Xloader](https://github.com/danielbernalb/LibreCO2/blob/main/images/Xloader1.png)
+![Xloader](https://github.com/danielbernalb/LibreCO2/blob/main/images/Xloader1.jpg)
 
 The left screenshot shows the window that Xloader displays when it starts.
 
-Enter the file path or browse to the .hex file that you would like to load into the Arduino. The files are available in each directory of the Sensor version of CanAirIO.
+2.1.1. Browse in your PC the .hex file that you would like to load into the Arduino. Each version of the sensor (Sensirion, Winsen or Cubic) are available in the "hex files" directory. Example: "LibreCO2_Winsen_MHZ14_9.hex" is the file for MH-Z14 or MH-Z19.
 
-Select the device type you are going to load into (Uno/ATmega328).
+2.1.2. Select the device type you are going to load into (Uno/ATmega328).
 
-Select the COM port where your Arduino is attached.
+2.1.3. Select the COM port where your Arduino is attached.
 
-The baud rate should be 115200.
+2.1.4. The baud rate should be 115200.
 
-Press the “Upload” button.
+2.1.5. Press the “Upload” button.
 
-When the .hex file has been loaded into the Arduino the right screenshot will show the size of the file uploaded, or an error message if the upload fails.
+2.1.6. When the .hex file has been loaded into the Arduino the right screenshot will show the size of the file uploaded, or an error message if the upload fails.
 
 
 2.2. Install Arduino and compile the code.
@@ -197,7 +200,4 @@ When the .hex file has been loaded into the Arduino the right screenshot will sh
 ****************************
 **Contact**
 
-Any doubt, bug, apport or comment please contact me at danielbernalb@gmail.com or twitter account @danielbernalb
-
-
-
+Any doubt, bug, apport or comment please contact me at danielbernalb@gmail.com or twitter account twitter [@danielbernalb](https://twitter.com/danielbernalb)
